@@ -1,21 +1,10 @@
-import { Module } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
-import { LoggerModule } from 'nestjs-pino'
-
-import { HealthCheckModule } from './health-check/health-check.module'
-import { OrganizationsModule } from './organizations/organizations.module'
+import { Module } from '@nestjs/common';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
 
 @Module({
-  imports: [
-    ConfigModule.forRoot(),
-    LoggerModule.forRoot({
-      pinoHttp: {
-        safe: true,
-        prettyPrint: process.env.NODE_ENV === 'development'
-      }
-    }),
-    HealthCheckModule,
-    OrganizationsModule
-  ]
+  imports: [],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

@@ -1,75 +1,172 @@
 version: "3"
 
 services:
-  comments-svc:
+  adresses-svc:
+    image: "adresses-svc:dev"
+    build:
+      context: "./microservices/adresses-svc"
+    networks:
+      - "frontend"
+      - "backend"
+      - "adressesdomain"
+    expose:
+      - "50051"
+    environment:
+      NODE_ENV: "test"
+      URL: "0.0.0.0"
+      PORT: "50051"
+    restart: "on-failure"
+  authentication-svc:
+    image: "authentication-svc:dev"
+    build:
+      context: "./microservices/authentication-svc"
+    networks:
+      - "frontend"
+      - "backend"
+      - "authenticationdomain"
+    expose:
+      - "50052"
+    environment:
+      NODE_ENV: "test"
+      URL: "0.0.0.0"
+      PORT: "50052"
+    restart: "on-failure"
+  cash-ops-svc:
+    image: "cash-ops-svc:dev"
+    build:
+      context: "./microservices/cash-ops-svc"
+    networks:
+      - "frontend"
+      - "backend"
+      - "cashopssdomain"
+    expose:
+      - "50053"
+    environment:
+      NODE_ENV: "test"
+      URL: "0.0.0.0"
+      PORT: "50053"
+    restart: "on-failure"
+  customers-svc:
+    image: "customers-svc:dev"
+    build:
+      context: "./microservices/customers-svc"
+    networks:
+      - "frontend"
+      - "backend"
+      - "customersdomain"
+    expose:
+      - "50054"
+    environment:
+      NODE_ENV: "test"
+      URL: "0.0.0.0"
+      PORT: "50054"
+    restart: "on-failure"
+  items-svc:
     image: "comments-svc:dev"
     build:
-      context: "./microservices/comments-svc"
+      context: "./microservices/items-svc"
     networks:
       - "frontend"
       - "backend"
-      - "commentsdomain"
+      - "itemsdomain"
     expose:
-      - "50051"
-    depends_on:
-      - "comments-db"
+      - "50055"
     environment:
       NODE_ENV: "test"
       URL: "0.0.0.0"
-      PORT: "50051"
-      DB_NAME: "postgres"
-      DB_HOST: "comments-db"
-      DB_PORT: "5432"
-      DB_USER: "postgres"
-      DB_PASSWORD: "postgres"
+      PORT: "50055"
     restart: "on-failure"
-
-  organizations-svc:
-    image: "organizations-svc:dev"
+  loyalty-svc:
+    image: "loyalty-svc:dev"
     build:
-      context: "./microservices/organizations-svc"
+      context: "./microservices/loyalty-svc"
     networks:
       - "frontend"
       - "backend"
-      - "organizationsdomain"
+      - "loyaltydomain"
     expose:
-      - "50051"
-    depends_on:
-      - "organizations-db"
+      - "50056"
     environment:
       NODE_ENV: "test"
       URL: "0.0.0.0"
-      PORT: "50051"
-      DB_NAME: "postgres"
-      DB_HOST: "organizations-db"
-      DB_PORT: "5432"
-      DB_USER: "postgres"
-      DB_PASSWORD: "postgres"
+      PORT: "50056"
     restart: "on-failure"
-
-  users-svc:
-    image: "users-svc:dev"
+  notifications-svc:
+    image: "notifications-svc:dev"
     build:
-      context: "./microservices/users-svc"
+      context: "./microservices/notifications-svc"
     networks:
       - "frontend"
       - "backend"
-      - "usersdomain"
+      - "notificationsdomain"
     expose:
-      - "50051"
-    depends_on:
-      - "users-db"
+      - "50057"
     environment:
       NODE_ENV: "test"
       URL: "0.0.0.0"
-      PORT: "50051"
-      DB_NAME: "postgres"
-      DB_HOST: "users-db"
-      DB_PORT: "5432"
-      DB_USER: "postgres"
-      DB_PASSWORD: "postgres"
+      PORT: "50057"
     restart: "on-failure"
-
+  register-ops-svc:
+    image: "register-ops-svc:dev"
+    build:
+      context: "./microservices/register-ops-svc"
+    networks:
+      - "frontend"
+      - "backend"
+      - "registeropsdomain"
+    expose:
+      - "50058"
+    environment:
+      NODE_ENV: "test"
+      URL: "0.0.0.0"
+      PORT: "50058"
+    restart: "on-failure"
+  sales-svc:
+    image: "sales-svc:dev"
+    build:
+      context: "./microservices/sales-svc"
+    networks:
+      - "frontend"
+      - "backend"
+      - "salesdomain"
+    expose:
+      - "50059"
+    environment:
+      NODE_ENV: "test"
+      URL: "0.0.0.0"
+      PORT: "50059"
+    restart: "on-failure"
+  service-catalog-svc:
+    image: "service-catalog-svc:dev"
+    build:
+      context: "./microservices/service-catalog-svc"
+    networks:
+      - "frontend"
+      - "backend"
+      - "servicecatalogdomain"
+    expose:
+      - "50060"
+    environment:
+      NODE_ENV: "test"
+      URL: "0.0.0.0"
+      PORT: "50060"
+    restart: "on-failure"
+  worker-process-svc:
+    image: "worker-process-svc:dev"
+    build:
+      context: "./microservices/worker-process-svc"
+    networks:
+      - "frontend"
+      - "backend"
+      - "workerprocessdomain"
+    expose:
+      - "50061"
+    environment:
+      NODE_ENV: "test"
+      URL: "0.0.0.0"
+      PORT: "50061"
+    restart: "on-failure"
+  
   api-gateway:
     image: "api-gateway:dev"
     build:
@@ -79,18 +176,42 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - "comments-svc"
-      - "organizations-svc"
-      - "users-svc"
+      - "adresses-svc"
+      - "authentication-svc"
+      - "cash-ops-svc"
+      - "customers-svc"
+      - "items-svc"
+      - "loyalty-svc"
+      - "notifications-svc"
+      - "register-ops-svc"
+      - "sales-svc"
+      - "service-catalog-svc"
+      - "worker-process-svc"
     environment:
       NODE_ENV: "test"
       PORT: "3000"
-      COMMENTS_SVC_URL: "comments-svc"
-      COMMENTS_SVC_PORT: "50051"
-      ORGANIZATIONS_SVC_URL: "organizations-svc"
-      ORGANIZATIONS_SVC_PORT: "50051"
-      USERS_SVC_URL: "users-svc"
-      USERS_SVC_PORT: "50051"
+      ADRESSES_SVC_URL: "adresses-svc"
+      ADRESSES_SVC_PORT: "50051"
+      AUTHENTICATION_SVC_URL: "authentication-svc"
+      AUTHENTICATION_SVC_PORT: "50052"
+      CASH_OPS_SVC_URL: "cash-ops-svc"
+      CASH_OPS_SVC_PORT: "50053"
+      CUSTOMERS_SVC_URL: "customers-svc"
+      CUSTOMERS_SVC_PORT: "50054"
+      ITEMS_SVC_URL: "items-svc"
+      ITEMS_SVC_PORT: "50055"
+      LOYALTY_SVC_URL: "loyalty-svc"
+      LOYALTY_SVC_PORT: "50056"
+      NOTIFICATIONS_SVC_URL: "notifications-svc"
+      NOTIFICATIONS_SVC_PORT: "50057"
+      REGISTER_OPS_SVC_URL: "register-ops-svc"
+      REGISTER_OPS_SVC_PORT: "50058"
+      SALES_SVC_URL: "sales-svc"
+      SALES_SVC_PORT: "50059"
+      SERVICE_CATALOG_SVC_URL: "service-catalog-svc"
+      SERVICE_CATALOG_SVC_PORT: "50060"
+      WORKER_PROCESS_SVC_URL: "worker-process-svc"
+      WORKER_PROCESS_SVC_PORT: "50061"
     healthcheck:
       test: ["CMD", "wget", "localhost:3000/healthz -q -O - > /dev/null 2>&1"]
       interval: 30s
@@ -114,57 +235,17 @@ services:
       timeout: 10s
       retries: 5
 
-  comments-db:
-    image: "postgres:12.1-alpine"
-    networks:
-      - "commentsdomain"
-    expose:
-      - "5432"
-    environment:
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "postgres"
-    healthcheck:
-      test: ["CMD-SHELL", "su -c 'pg_isready -U postgres' postgres"]
-      interval: 30s
-      timeout: 30s
-      retries: 3
-    restart: "on-failure"
-
-  organizations-db:
-    image: "postgres:12.1-alpine"
-    networks:
-      - "organizationsdomain"
-    expose:
-      - "5432"
-    environment:
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "postgres"
-    healthcheck:
-      test: ["CMD-SHELL", "su -c 'pg_isready -U postgres' postgres"]
-      interval: 30s
-      timeout: 30s
-      retries: 3
-    restart: "on-failure"
-
-  users-db:
-    image: "postgres:12.1-alpine"
-    networks:
-      - "usersdomain"
-    expose:
-      - "5432"
-    environment:
-      POSTGRES_USER: "postgres"
-      POSTGRES_PASSWORD: "postgres"
-    healthcheck:
-      test: ["CMD-SHELL", "su -c 'pg_isready -U postgres' postgres"]
-      interval: 30s
-      timeout: 30s
-      retries: 3
-    restart: "on-failure"
-
 networks:
   frontend:
   backend:
-  commentsdomain:
-  organizationsdomain:
-  usersdomain:
+  adressesdomain:
+  authenticationdomain:
+  cashopssdomain:
+  customersdomain:
+  itemsdomain:
+  loyaltydomain:
+  notificationsdomain:
+  registeropsdomain:
+  salesdomain:
+  servicecatalogdomain:
+  workerprocessdomain:
