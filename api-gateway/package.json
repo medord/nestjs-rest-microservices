@@ -28,7 +28,9 @@
     "@nestjs/microservices": "^8.2.6",
     "@nestjs/platform-express": "^8.0.0",
     "loadash": "^1.0.0",
+    "nestjs-pino": "^2.5.0",
     "pino": "^7.6.5",
+    "pino-http": "^6.6.0",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.5.2"
