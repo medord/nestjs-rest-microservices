@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { LoggerModule } from 'nestjs-pino';
 import { AdressesModule } from './adresses/adresses.module';
-import { AppController } from './app.controller';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { CashOpsModule } from './cash-ops/cash-ops.module';
 import { CustomersModule } from './customers/customers.module';
@@ -13,6 +12,7 @@ import { RegistryOpsModule } from './registry-ops/registry-ops.module';
 import { SalesModule } from './sales/sales.module';
 import { ServiceCatalogModule } from './service-catalog/service-catalog.module';
 import { WorkerProcessModule } from './worker-process/worker-process.module';
+import { UtilsModule } from './utils/utils.module';
 
 @Module({
   imports: [
@@ -34,7 +34,7 @@ import { WorkerProcessModule } from './worker-process/worker-process.module';
         prettyPrint: process.env.NODE_ENV === 'development'
       }
     }),
+    UtilsModule,
   ],
-  controllers: [AppController],
 })
 export class AppModule {}
